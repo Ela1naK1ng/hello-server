@@ -4,3 +4,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/lab_db
     username: postgres
     password: 123456
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      database: 0
