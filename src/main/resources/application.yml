@@ -10,3 +10,13 @@ spring:
       host: 127.0.0.1
       port: 6379
       database: 0
+
+  security:
+    user:
+      name: admin
+      password: admin
+
+security:
+  jwt:
+    secret: demo-jwt-secret-key-for-spring-security-2026
+    expiration-millis: 7200000

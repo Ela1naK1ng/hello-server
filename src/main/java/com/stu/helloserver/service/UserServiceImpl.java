@@ -1,4 +1,4 @@
-package com.stu.helloserver.service.impl;
+package com.stu.helloserver.service;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -10,6 +10,7 @@ import com.stu.helloserver.entity.User;
 import com.stu.helloserver.entity.UserInfo;
 import com.stu.helloserver.mapper.UserInfoMapper;
 import com.stu.helloserver.mapper.UserMapper;
+import com.stu.helloserver.security.JwtUtil;
 import com.stu.helloserver.service.UserService;
 import com.stu.helloserver.vo.UserDetailVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     private static final String CACHE_KEY_PREFIX = "user:detail:";
 
@@ -65,8 +69,9 @@ public class UserServiceImpl implements UserService {
             return Result.error(ResultCode.PASSWORD_ERROR);
         }
 
-        String token = "Bearer " + UUID.randomUUID().toString().replace("-", "");
-        return Result.success(token);
+        // 生成 JWT 替代 UUID
+        String jwt = jwtUtil.generateToken(userDTO.getUsername());
+        return Result.success(jwt);
     }
 
     @Override
