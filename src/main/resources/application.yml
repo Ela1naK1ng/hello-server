@@ -16,6 +16,10 @@ spring:
       name: admin
       password: admin
 
+  ai:
+    dashscope:
+      api-key: ${AI_DASHSCOPE_API_KEY}
+
 security:
   jwt:
     secret: demo-jwt-secret-key-for-spring-security-2026

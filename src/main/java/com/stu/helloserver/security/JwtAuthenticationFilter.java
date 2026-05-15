@@ -25,16 +25,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        // 1. 读取 Authorization 头
         String authHeader = request.getHeader("Authorization");
 
-        // 2. 无 Token 或不是 Bearer 开头，直接放行
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 3. 截取 JWT
         String jwt = authHeader.substring(7);
         String username;
 
@@ -45,7 +42,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        // 4. 如果解析到用户名且当前无认证信息
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = new User(username, "", new ArrayList<>());
             UsernamePasswordAuthenticationToken authToken =

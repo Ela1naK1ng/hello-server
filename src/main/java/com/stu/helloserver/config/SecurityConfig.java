@@ -31,7 +31,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/chat").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(AbstractHttpConfigurer::disable)
